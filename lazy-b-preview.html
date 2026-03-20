@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lazy B</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --honey: #E8A020;
+  --honey-d: #C07010;
+  --honey-l: #FDF3E0;
+  --honey-xl: #FFFAF2;
+  --onyx: #18160F;
+  --ink: #2C2818;
+  --mist: #8C8470;
+  --fog: #C8BFA8;
+  --paper: #F7F4ED;
+  --white: #FEFCF8;
+  --border: rgba(44,40,24,0.09);
+  --border-m: rgba(44,40,24,0.16);
+  --green: #4A7C59;
+  --green-l: #EBF3EE;
+  --rose: #B05060;
+  --rose-l: #F5EAEC;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ── LAYOUT ── */
+.shell { display: flex; height: 100vh; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  background: var(--onyx);
+  display: flex; flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.brand {
+  padding: 22px 20px 18px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+/* BEE SVG ICON */
+.bee-icon { flex-shrink: 0; }
+.brand-text { display: flex; flex-direction: column; }
+.brand-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px; font-weight: 400;
+  color: var(--honey);
+  letter-spacing: 0.02em; line-height: 1;
+}
+.brand-tag { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-top: 2px; }
+
+.user-pill {
+  margin: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex; align-items: center; gap: 9px;
+}
+.avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--honey); color: var(--onyx);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600; flex-shrink: 0;
+}
+.user-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); }
+.user-role { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+
+.nav { flex: 1; overflow-y: auto; padding: 4px 0 8px; }
+.nav-group { padding: 10px 16px 4px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); font-weight: 500; }
+.nav-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 16px; font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.45); cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all .12s;
+}
+.nav-item:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+.nav-item.active { color: var(--honey); border-left-color: var(--honey); background: rgba(232,160,32,0.08); }
+.nav-icon { font-size: 13px; width: 16px; text-align: center; opacity: 0.7; }
+.nav-item.active .nav-icon { opacity: 1; }
+.nav-badge {
+  margin-left: auto; background: var(--honey); color: var(--onyx);
+  font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; min-width: 16px; text-align: center;
+}
+
+.sync-panel {
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.sync-title { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 8px; }
+.sync-item { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 11px; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.sync-name { color: rgba(255,255,255,0.4); flex: 1; }
+.sync-status { font-size: 9px; font-weight: 600; }
+.sync-btn {
+  width: 100%; margin-top: 10px;
+  background: rgba(232,160,32,0.12); border: 1px solid rgba(232,160,32,0.25);
+  border-radius: 8px; padding: 7px; color: var(--honey);
+  font-size: 11px; font-family: 'Syne', sans-serif; font-weight: 500;
+  cursor: pointer; transition: background .15s;
+}
+.sync-btn:hover { background: rgba(232,160,32,0.2); }
+
+/* ── MAIN ── */
+.main { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+/* ── PAGE HEADER ── */
+.ph { margin-bottom: 22px; }
+.ph-eyebrow { font-size: 11px; color: var(--mist); margin-bottom: 4px; letter-spacing: 0.04em; }
+.ph-title { font-family: 'Instrument Serif', serif; font-size: 30px; font-weight: 400; line-height: 1.1; color: var(--ink); }
+.ph-title em { font-style: italic; color: var(--honey-d); }
+
+/* ── NUDGE CARD ── */
+.nudge {
+  background: var(--onyx); border-radius: 14px;
+  padding: 16px 18px; margin-bottom: 20px;
+  display: flex; align-items: flex-start; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.nudge::after {
+  content: ''; position: absolute; right: -20px; top: -20px;
+  width: 90px; height: 90px; border-radius: 50%;
+  background: rgba(232,160,32,0.06);
+}
+.nudge-bee { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.nudge-body { flex: 1; }
+.nudge-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 5px; }
+.nudge-msg { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55; font-weight: 300; }
+.nudge-msg b { font-weight: 600; color: var(--honey); }
+.nudge-spin {
+  background: none; border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 7px; padding: 5px 10px; color: rgba(255,255,255,0.45);
+  font-size: 11px; font-family: 'Syne', sans-serif; cursor: pointer;
+  transition: all .15s; align-self: center; white-space: nowrap;
+}
+.nudge-spin:hover { border-color: var(--honey); color: var(--honey); }
+
+/* ── STAT ROW ── */
+.stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+.stat {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 11px; padding: 14px 16px;
+}
+.stat-l { font-size: 10px; color: var(--mist); margin-bottom: 5px; letter-spacing: 0.03em; }
+.stat-v { font-family: 'Instrument Serif', serif; font-size: 26px; font-weight: 400; color: var(--ink); line-height: 1; }
+.stat-s { font-size: 10px; color: var(--mist); margin-top: 3px; }
+.stat-bar { height: 2px; background: var(--border); border-radius: 1px; margin-top: 8px; }
+.stat-fill { height: 100%; border-radius: 1px; background: var(--honey); transition: width 1s ease; }
+
+/* ── SECTION ── */
+.sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.sec-title { font-family: 'Instrument Serif', serif; font-size: 17px; font-weight: 400; color: var(--ink); }
+.sec-link { font-size: 11px; color: var(--honey-d); background: none; border: none; font-family: 'Syne', sans-serif; cursor: pointer; font-weight: 500; }
+.sec-link:hover { color: var(--honey); }
+
+/* ── CARD ── */
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+
+/* ── TASKS ── */
+.task {
+  display: flex; align-items: flex-start; gap: 11px;
+  padding: 12px 16px; border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background .1s;
+}
+.task:last-child { border-bottom: none; }
+.task:hover { background: var(--honey-xl); }
+.task.done { opacity: 0.45; }
+.task.done .task-txt { text-decoration: line-through; }
+.chk {
+  width: 17px; height: 17px; border-radius: 50%;
+  border: 1.5px solid var(--fog); background: var(--white);
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.chk.on { background: var(--honey); border-color: var(--honey); }
+.chk.on::after { content: '✓'; color: var(--onyx); font-size: 9px; font-weight: 700; }
+.task-b { flex: 1; }
+.task-txt { font-size: 13px; color: var(--ink); }
+.task-meta { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; align-items: center; }
+.tag {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.05em;
+  padding: 2px 7px; border-radius: 20px;
+}
+.t-micro { background: var(--honey-l); color: var(--honey-d); }
+.t-content { background: var(--rose-l); color: var(--rose); }
+.t-wellness { background: var(--green-l); color: var(--green); }
+.t-work { background: #EEF0F5; color: #5060A0; }
+.task-time { font-size: 10px; color: var(--mist); margin-left: auto; white-space: nowrap; }
+
+/* ── AI INPUT ── */
+.ai-bar { display: flex; gap: 8px; margin-bottom: 10px; }
+.ai-in {
+  flex: 1; border: 1px solid var(--border-m); border-radius: 9px;
+  padding: 9px 13px; font-size: 12px; font-family: 'Syne', sans-serif;
+  color: var(--ink); background: var(--white); outline: none;
+}
+.ai-in:focus { border-color: var(--honey); }
+.ai-in::placeholder { color: var(--fog); }
+.ai-btn {
+  background: var(--honey); color: var(--onyx); border: none;
+  border-radius: 9px; padding: 9px 16px; font-size: 12px;
+  font-family: 'Syne', sans-serif; font-weight: 600;
+  cursor: pointer; transition: background .15s; white-space: nowrap;
+}
+.ai-btn:hover { background: var(--honey-d); color: var(--white); }
+.ai-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.ai-resp {
+  background: var(--honey-l); border: 1px solid rgba(232,160,32,0.2);
+  border-radius: 9px; padding: 12px 14px; margin-bottom: 10px;
+  font-size: 12px; color: var(--honey-d); line-height: 1.55;
+  animation: fadeUp 0.3s ease;
+}
+.ai-resp-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 4px; font-weight: 600; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+
+/* ── CALENDAR ── */
+.cal-week { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 14px; }
+.cal-d {
+  text-align: center; padding: 7px 3px; border-radius: 8px;
+  cursor: pointer; transition: background .1s;
+}
+.cal-d:hover { background: var(--honey-l); }
+.cal-d.today { background: var(--honey); }
+.cal-d.today .cd-n, .cal-d.today .cd-wd { color: var(--onyx); }
+.cal-d.has-ev::after { content: '·'; display: block; color: var(--honey); font-size: 16px; line-height: 2px; margin-top: 3px; }
+.cal-d.today.has-ev::after { color: var(--onyx); }
+.cd-wd { font-size: 9px; font-weight: 600; color: var(--mist); margin-bottom: 3px; letter-spacing: 0.05em; }
+.cd-n { font-size: 13px; color: var(--ink); }
+
+/* ── EVENTS ── */
+.ev {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+}
+.ev:last-child { border-bottom: none; }
+.ev-time { text-align: right; min-width: 40px; }
+.ev-t { font-size: 11px; font-weight: 600; color: var(--ink); }
+.ev-dur { font-size: 9px; color: var(--mist); }
+.ev-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.ev-name { font-size: 12px; color: var(--ink); }
+.ev-loc { font-size: 10px; color: var(--mist); margin-top: 1px; }
+.ev-src { font-size: 9px; margin-top: 2px; font-weight: 600; }
+.ev-icloud { color: #1B74E4; }
+.ev-local { color: var(--mist); }
+
+/* ── NOTIFICATIONS ── */
+.notif {
+  display: flex; gap: 10px; padding: 11px 16px;
+  border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s;
+}
+.notif:hover { background: var(--honey-xl); }
+.notif:last-child { border-bottom: none; }
+.notif.unread { background: var(--honey-xl); }
+.notif-ico { width: 30px; height: 30px; border-radius: 50%; background: var(--paper); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.notif-b { flex: 1; }
+.notif-h { font-size: 12px; font-weight: 500; color: var(--ink); }
+.notif-p { font-size: 11px; color: var(--mist); margin-top: 1px; line-height: 1.4; }
+.notif-r { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.notif-when { font-size: 10px; color: var(--mist); white-space: nowrap; }
+.notif-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--honey); }
+
+/* ── SETUP MODAL ── */
+.modal-bg {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55); z-index: 100;
+  align-items: center; justify-content: center;
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: 16px;
+  padding: 24px 28px; width: 440px; max-width: 95vw;
+  animation: fadeUp 0.25s ease;
+}
+.modal-title { font-family: 'Instrument Serif', serif; font-size: 22px; margin-bottom: 6px; }
+.modal-sub { font-size: 12px; color: var(--mist); margin-bottom: 20px; line-height: 1.5; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 11px; font-weight: 600; color: var(--mist); margin-bottom: 5px; letter-spacing: 0.04em; }
+.field input {
+  width: 100%; border: 1px solid var(--border-m); border-radius: 8px;
+  padding: 9px 12px; font-size: 13px; font-family: 'Syne', sans-serif;
+  color: var(--ink); background: var(--paper); outline: none;
+}
+.field input:focus { border-color: var(--honey); background: var(--white); }
+.field-hint { font-size: 10px; color: var(--mist); margin-top: 4px; line-height: 1.5; }
+.modal-btns { display: flex; gap: 8px; margin-top: 20px; }
+.btn-primary {
+  flex: 1; background: var(--honey); color: var(--onyx); border: none;
+  border-radius: 9px; padding: 10px; font-size: 13px;
+  font-family: 'Syne', sans-serif; font-weight: 600; cursor: pointer;
+  transition: background .15s;
+}
+.btn-primary:hover { background: var(--honey-d); color: white; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-ghost {
+  background: none; border: 1px solid var(--border-m); border-radius: 9px;
+  padding: 10px 16px; font-size: 12px; font-family: 'Syne', sans-serif;
+  color: var(--mist); cursor: pointer; transition: border-color .15s;
+}
+.btn-ghost:hover { border-color: var(--fog); }
+.modal-msg { font-size: 12px; padding: 8px 12px; border-radius: 7px; margin-top: 10px; display: none; }
+.modal-msg.ok { background: var(--green-l); color: var(--green); display: block; }
+.modal-msg.err { background: var(--rose-l); color: var(--rose); display: block; }
+
+/* ── SPINNER ── */
+.spin { display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(0,0,0,0.15); border-top-color: var(--onyx); border-radius: 50%; animation: rot 0.5s linear infinite; }
+@keyframes rot { to { transform: rotate(360deg); } }
+
+/* ── SYNC PULSE ── */
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.syncing { animation: pulse 1s ease-in-out infinite; }
+
+/* ── GRID ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── PROGRESS BARS ── */
+.prog-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.prog-row:last-child { border-bottom: none; }
+.prog-label { font-size: 11px; color: var(--ink); min-width: 110px; font-weight: 500; }
+.prog-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; }
+.prog-fill { height: 100%; border-radius: 2px; }
+.prog-pct { font-size: 11px; color: var(--mist); min-width: 30px; text-align: right; }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-thumb { background: var(--border-m); border-radius: 2px; }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <!-- Minimal bee SVG icon -->
+      <svg class="bee-icon" width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <!-- Body -->
+        <ellipse cx="14" cy="15" rx="5.5" ry="7" fill="#E8A020"/>
+        <!-- Stripes -->
+        <rect x="8.5" y="13" width="11" height="2" rx="1" fill="#18160F" opacity="0.5"/>
+        <rect x="8.5" y="17" width="11" height="2" rx="1" fill="#18160F" opacity="0.5"/>
+        <!-- Head -->
+        <circle cx="14" cy="7.5" r="3" fill="#C07010"/>
+        <!-- Wings -->
+        <ellipse cx="8" cy="11" rx="4.5" ry="2.5" fill="rgba(255,255,255,0.35)" transform="rotate(-20 8 11)"/>
+        <ellipse cx="20" cy="11" rx="4.5" ry="2.5" fill="rgba(255,255,255,0.35)" transform="rotate(20 20 11)"/>
+        <!-- Antennae -->
+        <line x1="12" y1="5" x2="10" y2="2.5" stroke="#C07010" stroke-width="1" stroke-linecap="round"/>
+        <line x1="16" y1="5" x2="18" y2="2.5" stroke="#C07010" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="10" cy="2.5" r="1" fill="#C07010"/>
+        <circle cx="18" cy="2.5" r="1" fill="#C07010"/>
+        <!-- Stinger -->
+        <path d="M14 22 L12.5 25 L14 24 L15.5 25 Z" fill="#C07010"/>
+      </svg>
+      <div class="brand-text">
+        <div class="brand-name">Lazy B</div>
+        <div class="brand-tag">daily companion</div>
+      </div>
+    </div>
+
+    <div class="user-pill">
+      <div class="avatar">V</div>
+      <div>
+        <div class="user-name">Valentina</div>
+        <div class="user-role">Makeup Artist · Creator</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-group">Today</div>
+      <div class="nav-item active" onclick="go('dashboard',this)">
+        <span class="nav-icon">⬡</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="go('tasks',this)">
+        <span class="nav-icon">◻</span> Tasks
+        <span class="nav-badge" id="tbadge">5</span>
+      </div>
+      <div class="nav-item" onclick="go('notifs',this)">
+        <span class="nav-icon">◎</span> Notifications
+        <span class="nav-badge">3</span>
+      </div>
+      <div class="nav-group">Goals</div>
+      <div class="nav-item" onclick="go('micro',this)">
+        <span class="nav-icon">◈</span> Microblading
+      </div>
+      <div class="nav-item" onclick="go('content',this)">
+        <span class="nav-icon">◉</span> Instagram
+      </div>
+      <div class="nav-item" onclick="go('wellness',this)">
+        <span class="nav-icon">◇</span> Wellness
+      </div>
+      <div class="nav-group">Sync</div>
+      <div class="nav-item" onclick="go('calendar',this)">
+        <span class="nav-icon">▦</span> Calendar
+      </div>
+    </nav>
+
+    <div class="sync-panel">
+      <div class="sync-title">Connections</div>
+      <div class="sync-item">
+        <div class="sync-dot" id="dot-icloud" style="background:#aaa"></div>
+        <span class="sync-name">iCloud Calendar</span>
+        <span class="sync-status" id="st-icloud" style="color:#aaa;font-size:9px">–</span>
+      </div>
+      <div class="sync-item">
+        <div class="sync-dot" style="background:#E1306C"></div>
+        <span class="sync-name">Instagram</span>
+        <span class="sync-status" style="color:#E1306C;font-size:9px">Live</span>
+      </div>
+      <div class="sync-item">
+        <div class="sync-dot" style="background:#EA4335"></div>
+        <span class="sync-name">Gmail</span>
+        <span class="sync-status" style="color:#EA4335;font-size:9px">Live</span>
+      </div>
+      <button class="sync-btn" onclick="openSetup()">⚙ iCloud Setup</button>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <div id="view-dashboard" class="view active">
+      <div class="ph">
+        <div class="ph-eyebrow" id="ph-date"></div>
+        <div class="ph-title">Good morning, <em>Valentina</em></div>
+      </div>
+      <div class="nudge" id="nudge-banner">
+        <div class="nudge-bee">🐝</div>
+        <div class="nudge-body">
+          <div class="nudge-label">Lazy B · Daily nudge</div>
+          <div class="nudge-msg" id="nudge-txt">Loading your nudge…</div>
+        </div>
+        <button class="nudge-spin" onclick="loadNudge('daily')">↺</button>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-l">Tasks done today</div>
+          <div class="stat-v" id="s-done">—</div>
+          <div class="stat-bar"><div class="stat-fill" id="s-bar" style="width:0%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-l">Microblading streak</div>
+          <div class="stat-v">5 <span style="font-size:13px;color:var(--mist);font-family:'Syne'">days</span></div>
+          <div class="stat-s">🔥 Keep the streak alive</div>
+        </div>
+        <div class="stat">
+          <div class="stat-l">Posts this week</div>
+          <div class="stat-v">2 <span style="font-size:13px;color:var(--mist);font-family:'Syne'">/3</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:66%;background:var(--rose)"></div></div>
+        </div>
+      </div>
+      <div class="g2">
+        <div>
+          <div class="sec-head">
+            <div class="sec-title">Today's tasks</div>
+            <button class="sec-link" onclick="go('tasks',null)">All →</button>
+          </div>
+          <div class="card" id="dash-tasks"></div>
+        </div>
+        <div>
+          <div class="sec-head">
+            <div class="sec-title">Schedule</div>
+            <button class="sec-link" onclick="go('calendar',null)">Full →</button>
+          </div>
+          <div class="card" id="dash-events"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASKS -->
+    <div id="view-tasks" class="view">
+      <div class="ph">
+        <div class="ph-eyebrow" id="ph-date2"></div>
+        <div class="ph-title">My <em>Tasks</em></div>
+      </div>
+      <div class="ai-bar">
+        <input class="ai-in" id="ai-in" placeholder='Ask Lazy B… "add microblading practice at 7pm"' />
+        <button class="ai-btn" id="ai-go" onclick="addAiTask()">🐝 Add</button>
+      </div>
+      <div id="ai-resp"></div>
+      <div class="card" id="all-tasks"></div>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="view-notifs" class="view">
+      <div class="ph">
+        <div class="ph-title"><em>Notifications</em></div>
+      </div>
+      <div class="card" id="all-notifs"></div>
+    </div>
+
+    <!-- MICROBLADING -->
+    <div id="view-micro" class="view">
+      <div class="ph">
+        <div class="ph-eyebrow">Goal tracker</div>
+        <div class="ph-title">Microblading <em>Journey</em></div>
+      </div>
+      <div class="nudge" style="background:linear-gradient(120deg,#2A1A40,#4A2060)">
+        <div class="nudge-bee">◈</div>
+        <div class="nudge-body">
+          <div class="nudge-label">Microblading coach</div>
+          <div class="nudge-msg" id="micro-msg">Loading…</div>
+        </div>
+        <button class="nudge-spin" onclick="loadNudge('micro')">↺</button>
+      </div>
+      <div class="stats" style="margin-top:16px">
+        <div class="stat"><div class="stat-l">Sessions this month</div><div class="stat-v">14</div><div class="stat-bar"><div class="stat-fill" style="width:47%;background:#7040A0"></div></div></div>
+        <div class="stat"><div class="stat-l">Days to license goal</div><div class="stat-v">~130</div><div class="stat-s">Month 5 target</div></div>
+        <div class="stat"><div class="stat-l">Models booked</div><div class="stat-v">0 <span style="font-size:13px;color:var(--mist)">/ 5</span></div><div class="stat-s">Phase 2 target</div></div>
+      </div>
+      <div class="sec-head"><div class="sec-title">Phase progress</div></div>
+      <div class="card" style="padding:14px 16px">
+        <div class="prog-row"><span class="prog-label">Latex practice</span><div class="prog-bar"><div class="prog-fill" style="width:80%;background:#7040A0"></div></div><span class="prog-pct">80%</span></div>
+        <div class="prog-row"><span class="prog-label">Skin pads</span><div class="prog-bar"><div class="prog-fill" style="width:20%;background:var(--honey)"></div></div><span class="prog-pct">20%</span></div>
+        <div class="prog-row"><span class="prog-label">Live models</span><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--green)"></div></div><span class="prog-pct">0%</span></div>
+        <div class="prog-row"><span class="prog-label">Licensing</span><div class="prog-bar"><div class="prog-fill" style="width:0%;background:var(--rose)"></div></div><span class="prog-pct">0%</span></div>
+      </div>
+    </div>
+
+    <!-- INSTAGRAM -->
+    <div id="view-content" class="view">
+      <div class="ph">
+        <div class="ph-eyebrow">Content plan</div>
+        <div class="ph-title">Instagram <em>Creator</em></div>
+      </div>
+      <div class="nudge" style="background:linear-gradient(120deg,#833AB4,#E1306C)">
+        <div class="nudge-bee">◎</div>
+        <div class="nudge-body">
+          <div class="nudge-label">Content coach</div>
+          <div class="nudge-msg" id="insta-msg">Loading…</div>
+        </div>
+        <button class="nudge-spin" onclick="loadNudge('content')">↺</button>
+      </div>
+      <div class="stats" style="margin-top:16px">
+        <div class="stat"><div class="stat-l">Posts this week</div><div class="stat-v">2 <span style="font-size:13px;color:var(--mist)">/3</span></div><div class="stat-bar"><div class="stat-fill" style="width:66%;background:#E1306C"></div></div></div>
+        <div class="stat"><div class="stat-l">Stories today</div><div class="stat-v">0 <span style="font-size:13px;color:var(--mist)">/2</span></div><div class="stat-s">Post a quick poll</div></div>
+        <div class="stat"><div class="stat-l">Ideas queued</div><div class="stat-v">4</div><div class="stat-s">Ready to film</div></div>
+      </div>
+      <div class="sec-head"><div class="sec-title">Ideas ready to film</div></div>
+      <div class="card" id="ideas-list"></div>
+    </div>
+
+    <!-- WELLNESS -->
+    <div id="view-wellness" class="view">
+      <div class="ph">
+        <div class="ph-eyebrow">Daily habits</div>
+        <div class="ph-title">Wellness <em>Check-in</em></div>
+      </div>
+      <div class="nudge" style="background:linear-gradient(120deg,#1B4A35,#2E7A55)">
+        <div class="nudge-bee">◇</div>
+        <div class="nudge-body">
+          <div class="nudge-label">Wellness coach</div>
+          <div class="nudge-msg" id="well-msg">Loading…</div>
+        </div>
+        <button class="nudge-spin" onclick="loadNudge('wellness')">↺</button>
+      </div>
+      <div class="sec-head" style="margin-top:16px"><div class="sec-title">Today's habits</div></div>
+      <div class="card" id="well-tasks"></div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div id="view-calendar" class="view">
+      <div class="ph">
+        <div class="ph-title">iCloud <em>Calendar</em></div>
+      </div>
+      <div class="card" style="padding:16px;margin-bottom:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <span style="font-family:'Instrument Serif',serif;font-size:17px" id="cal-lbl"></span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="sec-link" onclick="shiftWeek(-1)">← Prev</button>
+            <button class="sec-link" onclick="shiftWeek(1)">Next →</button>
+            <button class="ai-btn" style="padding:6px 12px;font-size:11px" onclick="syncNow()" id="sync-btn">⟳ Sync</button>
+          </div>
+        </div>
+        <div class="cal-week" id="cal-week"></div>
+      </div>
+      <div class="sec-head"><div class="sec-title">Events</div><span id="sync-status" style="font-size:10px;color:var(--mist)"></span></div>
+      <div class="card" id="cal-events"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── SETUP MODAL ── -->
+<div class="modal-bg" id="setup-modal">
+  <div class="modal">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+        <ellipse cx="14" cy="15" rx="5.5" ry="7" fill="#E8A020"/>
+        <rect x="8.5" y="13" width="11" height="2" rx="1" fill="#18160F" opacity="0.5"/>
+        <rect x="8.5" y="17" width="11" height="2" rx="1" fill="#18160F" opacity="0.5"/>
+        <circle cx="14" cy="7.5" r="3" fill="#C07010"/>
+        <ellipse cx="8" cy="11" rx="4.5" ry="2.5" fill="rgba(100,100,255,0.25)" transform="rotate(-20 8 11)"/>
+        <ellipse cx="20" cy="11" rx="4.5" ry="2.5" fill="rgba(100,100,255,0.25)" transform="rotate(20 20 11)"/>
+      </svg>
+      <div class="modal-title">iCloud Calendar Setup</div>
+    </div>
+    <div class="modal-sub">Connect your iCloud calendar for live sync. You'll need an <b>App-Specific Password</b> — not your Apple ID password. <a href="https://appleid.apple.com" target="_blank" style="color:var(--honey-d)">Generate one at appleid.apple.com →</a></div>
+    <div class="field">
+      <label>APPLE ID EMAIL</label>
+      <input type="email" id="f-user" placeholder="your@icloud.com" />
+    </div>
+    <div class="field">
+      <label>APP-SPECIFIC PASSWORD</label>
+      <input type="password" id="f-pass" placeholder="xxxx-xxxx-xxxx-xxxx" />
+      <div class="field-hint">Go to appleid.apple.com → Sign-In and Security → App-Specific Passwords → Generate one labelled "Lazy B"</div>
+    </div>
+    <div class="field">
+      <label>CALENDAR URL <span style="font-weight:400;opacity:0.6">(optional — leave blank to auto-detect)</span></label>
+      <input type="url" id="f-url" placeholder="https://caldav.icloud.com/..." />
+      <div class="field-hint">iPhone: Settings → [Name] → iCloud → calendar account → Advanced → CalDAV Server</div>
+    </div>
+    <div id="modal-msg" class="modal-msg"></div>
+    <div class="modal-btns">
+      <button class="btn-ghost" onclick="closeSetup()">Cancel</button>
+      <button class="btn-primary" id="test-btn" onclick="testConnection()">🐝 Test &amp; Connect</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG ──────────────────────────────────────────────────────────────────
+// In production this points to your Hostinger server
+const API = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000'
+  : ''; // same-origin on Hostinger
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let calWeekOffset = 0;
+let icloudEvents = [];
+let credsSaved = false;
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const tasks = [
+  { id:1, text:'20 min microblading latex practice', tag:'micro', label:'Microblading', done:false, time:'Morning' },
+  { id:2, text:'Film a Reel during NARS break', tag:'content', label:'Content', done:false, time:'12:30pm' },
+  { id:3, text:'NARS shift — Westfield Stratford', tag:'work', label:'Work', done:true, time:'10am' },
+  { id:4, text:'Post scheduled Instagram carousel', tag:'content', label:'Content', done:false, time:'6pm' },
+  { id:5, text:'15-min core workout (planks + bird dogs)', tag:'wellness', label:'Wellness', done:true, time:'7am' },
+  { id:6, text:'Prep gluten-free lunch for tomorrow', tag:'wellness', label:'Wellness', done:false, time:'Evening' },
+  { id:7, text:'Reply to microblading DM inquiry', tag:'micro', label:'Microblading', done:false, time:'Evening' },
+];
+const wellnessHabits = [
+  { text:'Gluten-free breakfast', done:false },
+  { text:'Morning walk (15 min)', done:false },
+  { text:'Core workout or stretching', done:true },
+  { text:'Protein at every meal', done:false },
+  { text:'Hydration — 2L water', done:true },
+  { text:'Consistent wind-down time', done:false },
+];
+const notifs = [
+  { ico:'📅', h:'Microblading practice due', p:'Daily 20-min session — you\'re on a 5-day streak!', when:'8:00am', unread:true },
+  { ico:'📸', h:'Best time to post on Instagram', p:'Your audience is most active right now.', when:'12:00pm', unread:true },
+  { ico:'✉️', h:'New booking inquiry via DMs', p:'Someone asked about a microblading consultation.', when:'11:32am', unread:true },
+  { ico:'📅', h:'NARS shift tomorrow', p:'10am–6pm Westfield Stratford. Set out kit tonight.', when:'Yesterday', unread:false },
+  { ico:'📸', h:'Weekly Instagram goal check', p:'2 of 3 posts done — 1 more to hit your target.', when:'Yesterday', unread:false },
+];
+const ideas = [
+  { text:'"Day in the life: NARS makeup artist + microblading student"', fmt:'Reel', dur:'3–4 min' },
+  { text:'"Left-handed microblading — my technique tips"', fmt:'Reel', dur:'60 sec' },
+  { text:'"PCOS-friendly gluten-free lunch prep"', fmt:'Carousel', dur:'8 slides' },
+  { text:'"Products I actually use at NARS (MUA insider)"', fmt:'Grid post', dur:'1 min Reel' },
+];
+const localEvents = [
+  { time:'10:00', dur:'8h', name:'NARS shift', loc:'Westfield Stratford', color:'#B8923A', day:0 },
+  { time:'07:30', dur:'20min', name:'Microblading practice', loc:'Home', color:'#7040A0', day:0 },
+  { time:'18:30', dur:'45min', name:'Core workout', loc:'Gym', color:'#4A7C59', day:0 },
+  { time:'14:00', dur:'2h', name:'Hospitality — law firm', loc:'Canary Wharf', color:'#B8923A', day:1 },
+  { time:'11:00', dur:'1h', name:'Microblading model session', loc:'Home studio', color:'#7040A0', day:2 },
+  { time:'19:00', dur:'30min', name:'Film Instagram content', loc:'Home', color:'#E1306C', day:4 },
+];
+
+// ─── NUDGES ──────────────────────────────────────────────────────────────────
+const localNudges = {
+  daily: [
+    "You have a NARS shift today — perfect chance to film a <b>quick product Reel</b> during your break. Your microblading practice is due too; even 15 minutes builds the muscle memory.",
+    "Your Instagram streak is strong. One Reel today keeps momentum alive. The <b>left-handed microblading angle</b> is your niche — lean into it, it's rare.",
+    "Three things make this week a win: one practice session, one Instagram post, one good night's sleep. <b>Small and consistent beats big and sporadic</b>.",
+  ],
+  micro: [
+    "Left-hand technique gets easier after 3 weeks of consistent practice. Focus on <b>pressure control</b> — light strokes, not depth.",
+    "Try hair-stroke feathering at a <b>45° angle</b> today — suits left-hand mechanics better. 20 focused minutes beats an hour of unfocused practice.",
+    "Move from latex to a <b>practice skin pad</b> this week if strokes feel consistent. The feedback prepares you better for live work.",
+  ],
+  content: [
+    "You're 1 post away from your weekly goal. <b>Post something today</b>. Try: \"Left-handed microblading practice day 14 — the difference is real.\"",
+    "Stories take 30 seconds. A poll (<b>brow lamination or microblading?</b>) keeps you visible without filming.",
+    "Your <b>PCOS + beauty crossover</b> has a loyal, underserved audience. One honest post about managing fatigue will out-perform a polished product shot.",
+  ],
+  wellness: [
+    "Energy low? Prioritise <b>protein at lunch</b> — eggs, lentils, or chicken — to stabilise blood sugar. A 10-min walk after eating helps more than a nap.",
+    "Back pain reminder: set a <b>25-min timer during practice</b>, then stretch. Cat-cow, doorframe chest opener. Your posture matters as much as technique.",
+    "Gluten-free tip: <b>certified GF oats + quinoa</b> are your safe carb bases. Pair with protein every meal to avoid the PCOS blood sugar crash.",
+  ],
+};
+let nudgeIdx = { daily:0, micro:0, content:0, wellness:0 };
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+const now = new Date();
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const shortDays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+const dateStr = `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+document.getElementById('ph-date').textContent = dateStr;
+document.getElementById('ph-date2').textContent = dateStr;
+
+render();
+loadNudge('daily');
+renderCalWeek();
+loadCredentials();
+
+function render() {
+  renderTasks();
+  renderDashEvents();
+  renderNotifs();
+  renderIdeas();
+  renderWellness();
+}
+
+// ─── RENDERS ─────────────────────────────────────────────────────────────────
+function renderTasks() {
+  const done = tasks.filter(t=>t.done).length;
+  const total = tasks.length;
+  document.getElementById('s-done').innerHTML = `${done} <span style="font-size:13px;color:var(--mist);font-family:'Syne'">/&nbsp;${total}</span>`;
+  document.getElementById('s-bar').style.width = Math.round((done/total)*100)+'%';
+  document.getElementById('tbadge').textContent = total - done;
+
+  const html = tasks.map(t=>`
+    <div class="task${t.done?' done':''}" onclick="toggle(${t.id})">
+      <div class="chk${t.done?' on':''}"></div>
+      <div class="task-b">
+        <div class="task-txt">${t.text}</div>
+        <div class="task-meta"><span class="tag t-${t.tag}">${t.label}</span></div>
+      </div>
+      <div class="task-time">${t.time}</div>
+    </div>`).join('');
+  document.getElementById('dash-tasks').innerHTML = tasks.slice(0,4).map(t=>`
+    <div class="task${t.done?' done':''}" onclick="toggle(${t.id})">
+      <div class="chk${t.done?' on':''}"></div>
+      <div class="task-b">
+        <div class="task-txt">${t.text}</div>
+        <div class="task-meta"><span class="tag t-${t.tag}">${t.label}</span></div>
+      </div>
+      <div class="task-time">${t.time}</div>
+    </div>`).join('');
+  document.getElementById('all-tasks').innerHTML = html;
+}
+
+function toggle(id) {
+  const t = tasks.find(t=>t.id===id);
+  if(t) { t.done=!t.done; renderTasks(); }
+}
+
+function renderDashEvents() {
+  const today = localEvents.filter(e=>e.day===0);
+  const combined = [...icloudEvents.filter(e=>{
+    const d = new Date(e.start); return d.toDateString()===now.toDateString();
+  }).map(e=>({
+    time: new Date(e.start).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    dur:'', name:e.title, loc:e.location||'', color:'#1B74E4', icloud:true
+  })), ...today];
+  document.getElementById('dash-events').innerHTML = combined.length
+    ? combined.map(e=>`<div class="ev">
+        <div class="ev-time"><div class="ev-t">${e.time}</div><div class="ev-dur">${e.dur}</div></div>
+        <div class="ev-dot" style="background:${e.color}"></div>
+        <div><div class="ev-name">${e.name}</div><div class="ev-loc">${e.loc}</div>
+        ${e.icloud?'<div class="ev-src ev-icloud">iCloud</div>':''}</div>
+      </div>`).join('')
+    : '<div style="padding:16px;font-size:12px;color:var(--mist)">No events today</div>';
+}
+
+function renderNotifs() {
+  const html = notifs.map(n=>`
+    <div class="notif${n.unread?' unread':''}">
+      <div class="notif-ico">${n.ico}</div>
+      <div class="notif-b">
+        <div class="notif-h">${n.h}</div>
+        <div class="notif-p">${n.p}</div>
+      </div>
+      <div class="notif-r">
+        <span class="notif-when">${n.when}</span>
+        ${n.unread?'<div class="notif-dot"></div>':''}
+      </div>
+    </div>`).join('');
+  document.getElementById('all-notifs').innerHTML = html;
+}
+
+function renderIdeas() {
+  document.getElementById('ideas-list').innerHTML = ideas.map(i=>`
+    <div class="task">
+      <div class="chk" style="border-radius:4px"></div>
+      <div class="task-b">
+        <div class="task-txt">${i.text}</div>
+        <div class="task-meta">
+          <span class="tag t-content">${i.fmt}</span>
+          <span class="tag" style="background:var(--honey-l);color:var(--honey-d)">${i.dur}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function renderWellness() {
+  document.getElementById('well-tasks').innerHTML = wellnessHabits.map((h,i)=>`
+    <div class="task${h.done?' done':''}" onclick="toggleW(${i})">
+      <div class="chk${h.done?' on':''}"></div>
+      <div class="task-b">
+        <div class="task-txt">${h.text}</div>
+        <div class="task-meta"><span class="tag t-wellness">Wellness</span></div>
+      </div>
+    </div>`).join('');
+}
+function toggleW(i) { wellnessHabits[i].done=!wellnessHabits[i].done; renderWellness(); }
+
+function renderCalWeek() {
+  const base = new Date(now);
+  base.setDate(base.getDate() + calWeekOffset*7);
+  const mon = new Date(base);
+  mon.setDate(base.getDate()-((base.getDay()+6)%7));
+  document.getElementById('cal-lbl').textContent = `${months[mon.getMonth()]} ${mon.getFullYear()}`;
+
+  let html='';
+  for(let i=0;i<7;i++){
+    const d=new Date(mon); d.setDate(mon.getDate()+i);
+    const isT = d.toDateString()===now.toDateString();
+    const hasE = localEvents.some(e=>e.day===i&&calWeekOffset===0) ||
+      icloudEvents.some(e=>new Date(e.start).toDateString()===d.toDateString());
+    html+=`<div class="cal-d${isT?' today':''}${hasE?' has-ev':''}">
+      <div class="cd-wd">${shortDays[d.getDay()]}</div>
+      <div class="cd-n">${d.getDate()}</div>
+    </div>`;
+  }
+  document.getElementById('cal-week').innerHTML = html;
+  renderCalEvents(mon);
+}
+
+function renderCalEvents(mon) {
+  const el = document.getElementById('cal-events');
+  const local = calWeekOffset===0 ? localEvents : [];
+  const cloud = icloudEvents.filter(e=>{
+    const d=new Date(e.start);
+    const dayDiff = Math.floor((d-mon)/(1000*60*60*24));
+    return dayDiff>=0&&dayDiff<7;
+  }).map(e=>({
+    time:new Date(e.start).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
+    dur:'', name:e.title, loc:e.location||'', color:'#1B74E4', icloud:true, day:0
+  }));
+  const all = [...local.map(e=>({...e,icloud:false})),...cloud]
+    .sort((a,b)=>a.time.localeCompare(b.time));
+  el.innerHTML = all.length
+    ? all.map(e=>`<div class="ev" style="padding:11px 16px">
+        <div class="ev-time"><div class="ev-t">${e.time}</div><div class="ev-dur">${e.dur}</div></div>
+        <div class="ev-dot" style="background:${e.color}"></div>
+        <div>
+          <div class="ev-name">${e.name}</div>
+          <div class="ev-loc">${e.loc}</div>
+          <div class="ev-src ${e.icloud?'ev-icloud':'ev-local'}">${e.icloud?'iCloud Calendar':'Local'}</div>
+        </div>
+      </div>`).join('')
+    : '<div style="padding:16px;font-size:12px;color:var(--mist)">No events this week</div>';
+}
+
+function shiftWeek(d){ calWeekOffset+=d; renderCalWeek(); }
+
+// ─── ICLOUD SYNC ─────────────────────────────────────────────────────────────
+async function syncNow() {
+  const btn = document.getElementById('sync-btn');
+  const st = document.getElementById('sync-status');
+  const creds = loadCredentials();
+  if(!creds) { openSetup(); return; }
+
+  btn.textContent='⟳ Syncing…';
+  btn.classList.add('syncing');
+  btn.disabled = true;
+  st.textContent = 'Syncing…';
+
+  try {
+    const res = await fetch(`${API}/api/calendar/events`);
+    const data = await res.json();
+    if(data.success) {
+      icloudEvents = data.events;
+      const t = new Date(data.synced).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      st.textContent = `Synced ${icloudEvents.length} events · ${t}`;
+      setConnected(true);
+      renderCalWeek();
+      renderDashEvents();
+    } else {
+      st.textContent = 'Sync failed — check credentials';
+      setConnected(false);
+    }
+  } catch(e) {
+    st.textContent = 'Server offline — showing local events';
+    setConnected(false);
+  }
+
+  btn.textContent='⟳ Sync';
+  btn.classList.remove('syncing');
+  btn.disabled = false;
+}
+
+function setConnected(ok) {
+  document.getElementById('dot-icloud').style.background = ok?'#34C759':'#aaa';
+  document.getElementById('st-icloud').style.color = ok?'#34C759':'#aaa';
+  document.getElementById('st-icloud').textContent = ok?'Live':'–';
+}
+
+function loadCredentials() {
+  const u = localStorage.getItem('lb_user');
+  const p = localStorage.getItem('lb_pass');
+  return u&&p ? {u,p} : null;
+}
+
+// ─── SETUP MODAL ─────────────────────────────────────────────────────────────
+function openSetup() {
+  document.getElementById('setup-modal').classList.add('open');
+  const creds = loadCredentials();
+  if(creds) {
+    document.getElementById('f-user').value = creds.u;
+    document.getElementById('f-pass').value = '••••••••••••';
+  }
+}
+function closeSetup() { document.getElementById('setup-modal').classList.remove('open'); }
+
+async function testConnection() {
+  const user = document.getElementById('f-user').value.trim();
+  const pass = document.getElementById('f-pass').value.trim();
+  const url  = document.getElementById('f-url').value.trim();
+  const msg  = document.getElementById('modal-msg');
+  const btn  = document.getElementById('test-btn');
+  if(!user||!pass) { showMsg('Please enter your Apple ID and App-Specific Password','err'); return; }
+
+  btn.disabled=true; btn.innerHTML='<span class="spin"></span> Testing…';
+  msg.className='modal-msg'; msg.style.display='none';
+
+  try {
+    const res = await fetch(`${API}/api/calendar/test`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({username:user, password:pass, calendarUrl:url||undefined})
+    });
+    const data = await res.json();
+    if(data.success) {
+      localStorage.setItem('lb_user', user);
+      localStorage.setItem('lb_pass', pass);
+      if(url) localStorage.setItem('lb_url', url);
+      showMsg('✓ '+data.message, 'ok');
+      setConnected(true);
+      setTimeout(()=>{ closeSetup(); syncNow(); }, 1200);
+    } else {
+      showMsg(data.error||'Connection failed', 'err');
+    }
+  } catch(e) {
+    showMsg('Could not reach server. Is it running on Hostinger?','err');
+  }
+
+  btn.disabled=false; btn.innerHTML='🐝 Test & Connect';
+}
+
+function showMsg(text,type) {
+  const el = document.getElementById('modal-msg');
+  el.textContent=text; el.className='modal-msg '+type;
+}
+
+// ─── AI NUDGES ───────────────────────────────────────────────────────────────
+async function loadNudge(type) {
+  const ids = { daily:'nudge-txt', micro:'micro-msg', content:'insta-msg', wellness:'well-msg' };
+  const el = document.getElementById(ids[type]);
+  if(!el) return;
+
+  // Rotate local nudge immediately
+  const arr = localNudges[type];
+  nudgeIdx[type] = (nudgeIdx[type]+1) % arr.length;
+  el.innerHTML = arr[nudgeIdx[type]];
+
+  // Try server for AI nudge
+  try {
+    const res = await fetch(`${API}/api/ai/nudge`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type, context:'Give me a nudge for today.'})
+    });
+    const data = await res.json();
+    if(data.success && data.nudge) el.textContent = data.nudge;
+  } catch(_) {} // silently keep local nudge
+}
+
+// ─── AI TASK ─────────────────────────────────────────────────────────────────
+async function addAiTask() {
+  const inp = document.getElementById('ai-in');
+  const btn = document.getElementById('ai-go');
+  const respEl = document.getElementById('ai-resp');
+  const prompt = inp.value.trim();
+  if(!prompt) return;
+
+  btn.disabled=true; btn.innerHTML='<span class="spin" style="border-top-color:var(--onyx)"></span>';
+  respEl.innerHTML='';
+
+  try {
+    const res = await fetch(`${API}/api/ai/task`,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt})
+    });
+    const data = await res.json();
+    if(data.success) {
+      const t = data.task;
+      const newId = Math.max(...tasks.map(t=>t.id))+1;
+      tasks.push({id:newId, text:t.task, tag:t.tag||'work', label:{micro:'Microblading',content:'Content',wellness:'Wellness',work:'Work'}[t.tag]||'Work', done:false, time:t.time||'Today'});
+      respEl.innerHTML=`<div class="ai-resp"><div class="ai-resp-label">🐝 Added to your tasks</div><b>${t.task}</b> — ${t.note}</div>`;
+      renderTasks();
+      inp.value='';
+    }
+  } catch(_) {
+    // fallback: add manually
+    const newId = Math.max(...tasks.map(t=>t.id))+1;
+    tasks.push({id:newId, text:prompt, tag:'work', label:'Work', done:false, time:'Today'});
+    renderTasks(); inp.value='';
+  }
+
+  btn.disabled=false; btn.innerHTML='🐝 Add';
+}
+
+document.getElementById('ai-in').addEventListener('keydown',e=>{ if(e.key==='Enter') addAiTask(); });
+
+// ─── NAVIGATION ──────────────────────────────────────────────────────────────
+function go(id, btn) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+id).classList.add('active');
+  if(btn) { btn.classList.add('active'); return; }
+  document.querySelectorAll('.nav-item').forEach(b=>{
+    if((b.getAttribute('onclick')||'').includes(`'${id}'`)) b.classList.add('active');
+  });
+  // Load nudge when entering goal views
+  if(id==='micro') loadNudge('micro');
+  if(id==='content') loadNudge('content');
+  if(id==='wellness') loadNudge('wellness');
+}
+
+// Close modal on bg click
+document.getElementById('setup-modal').addEventListener('click',function(e){
+  if(e.target===this) closeSetup();
+});
+
+// Auto-sync on load if creds exist
+if(loadCredentials()) setTimeout(syncNow, 800);
+</script>
+</body>
+</html>

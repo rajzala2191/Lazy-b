@@ -348,6 +348,86 @@ body {
 
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-thumb { background: var(--border-m); border-radius: 2px; }
+
+/* ── MOBILE NAV ── */
+.mob-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--onyx);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  z-index: 100;
+}
+.mob-nav-items { display: flex; justify-content: space-around; align-items: center; }
+.mob-nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 10px; cursor: pointer;
+  color: rgba(255,255,255,0.35); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; transition: color .15s;
+  flex: 1;
+}
+.mob-nav-item.active { color: var(--honey); }
+.mob-nav-icon { font-size: 20px; line-height: 1; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .mob-nav { display: block; }
+
+  .shell { height: auto; min-height: 100vh; overflow: visible; }
+  .main { padding: 20px 16px 90px; overflow: visible; height: auto; }
+
+  .ph { margin-bottom: 16px; }
+  .ph-title { font-size: 28px; }
+  .ph-eyebrow { font-size: 12px; }
+
+  .nudge { padding: 14px 14px; gap: 10px; }
+  .nudge-msg { font-size: 14px; }
+  .nudge-spin { padding: 6px 10px; font-size: 18px; }
+
+  .stats { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stat { padding: 12px 14px; }
+  .stat-v { font-size: 26px; }
+
+  .g2 { grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+
+  .sec-title { font-size: 18px; }
+
+  .task { padding: 12px 14px; gap: 10px; }
+  .task-txt { font-size: 14px; }
+  .task-time { font-size: 12px; }
+
+  .ai-bar { flex-direction: row; }
+  .ai-in { font-size: 14px; padding: 10px 12px; }
+  .ai-btn { font-size: 13px; padding: 10px 14px; }
+
+  .cal-week { gap: 3px; }
+  .cal-d { padding: 8px 2px; border-radius: 8px; }
+  .cd-n { font-size: 13px; }
+  .cd-wd { font-size: 9px; }
+
+  .ev { padding: 10px 14px; }
+  .ev-name { font-size: 13px; }
+  .ev-loc { font-size: 11px; }
+  .ev-t { font-size: 12px; }
+
+  .notif { padding: 10px 14px; }
+  .notif-h { font-size: 13px; }
+  .notif-p { font-size: 12px; }
+
+  .modal { width: 95vw; padding: 20px; border-radius: 16px; }
+  .modal-title { font-size: 20px; }
+
+  .prog-label { min-width: 90px; font-size: 12px; }
+
+  .card { border-radius: 12px; }
+}
+
+@media (max-width: 400px) {
+  .stats { grid-template-columns: 1fr; }
+  .ph-title { font-size: 24px; }
+  .main { padding: 16px 12px 90px; }
+}
 </style>
 </head>
 <body>
@@ -605,6 +685,32 @@ body {
 
   </main>
 </div>
+
+<!-- ── MOBILE BOTTOM NAV ── -->
+<nav class="mob-nav">
+  <div class="mob-nav-items">
+    <div class="mob-nav-item active" onclick="go('dashboard',this)" data-mob>
+      <div class="mob-nav-icon">⬡</div>
+      <div>Home</div>
+    </div>
+    <div class="mob-nav-item" onclick="go('tasks',this)" data-mob>
+      <div class="mob-nav-icon">◻</div>
+      <div>Tasks</div>
+    </div>
+    <div class="mob-nav-item" onclick="go('calendar',this)" data-mob>
+      <div class="mob-nav-icon">▦</div>
+      <div>Calendar</div>
+    </div>
+    <div class="mob-nav-item" onclick="go('micro',this)" data-mob>
+      <div class="mob-nav-icon">◈</div>
+      <div>Goals</div>
+    </div>
+    <div class="mob-nav-item" onclick="openSetup()" data-mob>
+      <div class="mob-nav-icon">⚙</div>
+      <div>Setup</div>
+    </div>
+  </div>
+</nav>
 
 <!-- ── SETUP MODAL ── -->
 <div class="modal-bg" id="setup-modal">
@@ -1085,11 +1191,23 @@ document.getElementById('ai-in').addEventListener('keydown',e=>{ if(e.key==='Ent
 function go(id, btn) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-item[data-mob]').forEach(b=>b.classList.remove('active'));
   document.getElementById('view-'+id).classList.add('active');
-  if(btn) { btn.classList.add('active'); return; }
+  // Sync sidebar active
   document.querySelectorAll('.nav-item').forEach(b=>{
     if((b.getAttribute('onclick')||'').includes(`'${id}'`)) b.classList.add('active');
   });
+  // Sync mobile nav active
+  if(btn && btn.hasAttribute('data-mob')) {
+    btn.classList.add('active');
+  } else {
+    document.querySelectorAll('.mob-nav-item[data-mob]').forEach(b=>{
+      if((b.getAttribute('onclick')||'').includes(`'${id}'`)) b.classList.add('active');
+    });
+  }
+  // Scroll to top on mobile
+  document.querySelector('.main').scrollTo(0,0);
+  window.scrollTo(0,0);
   // Load nudge when entering goal views
   if(id==='micro') loadNudge('micro');
   if(id==='content') loadNudge('content');

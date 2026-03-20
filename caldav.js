@@ -2,15 +2,17 @@ const https = require('https');
 const http = require('http');
 
 // ─── MAIN: Fetch events from iCloud CalDAV ───────────────────────────────────
-async function fetchCalDAVEvents(username, password, calendarUrl, daysAhead = 14) {
+async function fetchCalDAVEvents(username, password, calendarUrl, daysAhead = 14, daysBehind = 90) {
   if (!username || !username.includes('@')) {
     throw new Error('Invalid iCloud username (must be an Apple ID email)');
   }
 
   const now = new Date();
+  const past = new Date(now);
+  past.setDate(past.getDate() - daysBehind);
   const future = new Date(now);
   future.setDate(future.getDate() + daysAhead);
-  const dtStart = toCalDAVDate(now);
+  const dtStart = toCalDAVDate(past);
   const dtEnd = toCalDAVDate(future);
 
   const baseUrl = calendarUrl || 'https://caldav.icloud.com/';

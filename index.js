@@ -22,8 +22,9 @@ app.get('/api/health', (req, res) => {
 app.get('/api/calendar/events', async (req, res) => {
   try {
     const { username, password, calendarUrl } = getCredentials(req);
-    const daysAhead = parseInt(req.query.days) || 14;
-    const events = await fetchCalDAVEvents(username, password, calendarUrl, daysAhead);
+    const daysAhead = parseInt(req.query.days) || 60;
+    const daysBehind = parseInt(req.query.behind) || 90;
+    const events = await fetchCalDAVEvents(username, password, calendarUrl, daysAhead, daysBehind);
     res.json({ success: true, events, synced: new Date().toISOString() });
   } catch (err) {
     console.error('CalDAV error:', err.message);

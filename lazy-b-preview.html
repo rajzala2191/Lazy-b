@@ -1017,16 +1017,16 @@ function renderCalEvents(mon) {
 function shiftWeek(d){ selectedDayOffset=null; calWeekOffset+=d; renderCalWeek(); }
 
 // ─── ICLOUD SYNC ─────────────────────────────────────────────────────────────
-async function syncNow() {
+async function syncNow(silent) {
   const btn = document.getElementById('sync-btn');
   const st = document.getElementById('sync-status');
-  const creds = loadCredentials();
-  if(!creds) { openSetup(); return; }
 
-  btn.textContent='⟳ Syncing…';
-  btn.classList.add('syncing');
-  btn.disabled = true;
-  st.textContent = 'Syncing…';
+  if(!silent) {
+    btn.textContent='⟳ Syncing…';
+    btn.classList.add('syncing');
+    btn.disabled = true;
+  }
+  if(st) st.textContent = 'Syncing…';
 
   try {
     const res = await fetch(`${API}/api/calendar/events`);
@@ -1034,22 +1034,24 @@ async function syncNow() {
     if(data.success) {
       icloudEvents = data.events;
       const t = new Date(data.synced).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-      st.textContent = `Synced ${icloudEvents.length} events · ${t}`;
+      if(st) st.textContent = `Synced ${icloudEvents.length} events · ${t}`;
       setConnected(true);
       renderCalWeek();
       renderDashEvents();
     } else {
-      st.textContent = 'Sync failed — check credentials';
+      if(st) st.textContent = 'Sync failed';
       setConnected(false);
     }
   } catch(e) {
-    st.textContent = 'Server offline — showing local events';
+    if(st) st.textContent = 'Server offline';
     setConnected(false);
   }
 
-  btn.textContent='⟳ Sync';
-  btn.classList.remove('syncing');
-  btn.disabled = false;
+  if(!silent) {
+    btn.textContent='⟳ Sync';
+    btn.classList.remove('syncing');
+    btn.disabled = false;
+  }
 }
 
 function setConnected(ok) {
@@ -1219,8 +1221,9 @@ document.getElementById('setup-modal').addEventListener('click',function(e){
   if(e.target===this) closeSetup();
 });
 
-// Auto-sync on load if creds exist
-if(loadCredentials()) setTimeout(syncNow, 800);
+// Auto-sync on load, then every 5 minutes
+setTimeout(syncNow, 800);
+setInterval(() => syncNow(true), 5 * 60 * 1000);
 </script>
 </body>
 </html>

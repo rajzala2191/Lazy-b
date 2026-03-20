@@ -30,8 +30,8 @@ body {
   font-family: 'Nunito', sans-serif;
   background: var(--paper);
   color: var(--ink);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 /* ── LAYOUT ── */
@@ -56,11 +56,11 @@ body {
 .brand-text { display: flex; flex-direction: column; }
 .brand-name {
   font-family: 'Instrument Serif', serif;
-  font-size: 22px; font-weight: 400;
+  font-size: 24px; font-weight: 400;
   color: var(--honey);
   letter-spacing: 0.02em; line-height: 1;
 }
-.brand-tag { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-top: 2px; }
+.brand-tag { font-size: 12px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-top: 2px; }
 
 .user-pill {
   margin: 14px 16px;
@@ -76,36 +76,36 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 12px; font-weight: 600; flex-shrink: 0;
 }
-.user-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); }
-.user-role { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+.user-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.9); }
+.user-role { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 1px; }
 
 .nav { flex: 1; overflow-y: auto; padding: 4px 0 8px; }
-.nav-group { padding: 10px 16px 4px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); font-weight: 500; }
+.nav-group { padding: 12px 16px 4px; font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.25); font-weight: 700; }
 .nav-item {
-  display: flex; align-items: center; gap: 9px;
-  padding: 8px 16px; font-size: 12px; font-weight: 400;
-  color: rgba(255,255,255,0.45); cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; font-size: 14px; font-weight: 500;
+  color: rgba(255,255,255,0.5); cursor: pointer;
   border-left: 2px solid transparent;
   transition: all .12s;
 }
-.nav-item:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+.nav-item:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.05); }
 .nav-item.active { color: var(--honey); border-left-color: var(--honey); background: rgba(240,98,146,0.08); }
-.nav-icon { font-size: 13px; width: 16px; text-align: center; opacity: 0.7; }
+.nav-icon { font-size: 14px; width: 18px; text-align: center; opacity: 0.7; }
 .nav-item.active .nav-icon { opacity: 1; }
 .nav-badge {
   margin-left: auto; background: var(--honey); color: var(--onyx);
-  font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; min-width: 16px; text-align: center;
+  font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 10px; min-width: 20px; text-align: center;
 }
 
 .sync-panel {
   padding: 12px 16px 16px;
   border-top: 1px solid rgba(255,255,255,0.06);
 }
-.sync-title { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 8px; }
-.sync-item { display: flex; align-items: center; gap: 7px; padding: 4px 0; font-size: 11px; }
-.sync-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.sync-name { color: rgba(255,255,255,0.4); flex: 1; }
-.sync-status { font-size: 9px; font-weight: 600; }
+.sync-title { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 8px; font-weight: 700; }
+.sync-item { display: flex; align-items: center; gap: 7px; padding: 5px 0; font-size: 13px; }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sync-name { color: rgba(255,255,255,0.45); flex: 1; }
+.sync-status { font-size: 11px; font-weight: 700; }
 .sync-btn {
   width: 100%; margin-top: 10px;
   background: rgba(240,98,146,0.12); border: 1px solid rgba(240,98,146,0.25);
@@ -120,8 +120,8 @@ body {
 
 /* ── PAGE HEADER ── */
 .ph { margin-bottom: 22px; }
-.ph-eyebrow { font-size: 11px; color: var(--mist); margin-bottom: 4px; letter-spacing: 0.04em; }
-.ph-title { font-family: 'Instrument Serif', serif; font-size: 30px; font-weight: 400; line-height: 1.1; color: var(--ink); }
+.ph-eyebrow { font-size: 13px; color: var(--mist); margin-bottom: 6px; letter-spacing: 0.04em; font-weight: 500; }
+.ph-title { font-family: 'Instrument Serif', serif; font-size: 38px; font-weight: 400; line-height: 1.1; color: var(--ink); }
 .ph-title em { font-style: italic; color: var(--honey-d); }
 
 /* ── NUDGE CARD ── */
@@ -138,16 +138,16 @@ body {
 }
 .nudge-bee { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
 .nudge-body { flex: 1; }
-.nudge-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 5px; }
-.nudge-msg { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55; font-weight: 300; }
-.nudge-msg b { font-weight: 600; color: var(--honey); }
+.nudge-label { font-size: 11px; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 7px; font-weight: 600; }
+.nudge-msg { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.6; font-weight: 400; }
+.nudge-msg b { font-weight: 700; color: var(--honey); }
 .nudge-spin {
-  background: none; border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 7px; padding: 5px 10px; color: rgba(255,255,255,0.45);
-  font-size: 11px; font-family: 'Nunito', sans-serif; cursor: pointer;
-  transition: all .15s; align-self: center; white-space: nowrap;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px; padding: 8px 14px; color: rgba(255,255,255,0.6);
+  font-size: 16px; font-family: 'Nunito', sans-serif; cursor: pointer;
+  transition: all .15s; align-self: center; white-space: nowrap; line-height: 1;
 }
-.nudge-spin:hover { border-color: var(--honey); color: var(--honey); }
+.nudge-spin:hover { border-color: var(--honey); color: var(--honey); background: rgba(240,98,146,0.15); }
 
 /* ── STAT ROW ── */
 .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
@@ -155,16 +155,16 @@ body {
   background: var(--white); border: 1px solid var(--border);
   border-radius: 11px; padding: 14px 16px;
 }
-.stat-l { font-size: 10px; color: var(--mist); margin-bottom: 5px; letter-spacing: 0.03em; }
-.stat-v { font-family: 'Instrument Serif', serif; font-size: 26px; font-weight: 400; color: var(--ink); line-height: 1; }
-.stat-s { font-size: 10px; color: var(--mist); margin-top: 3px; }
+.stat-l { font-size: 12px; color: var(--mist); margin-bottom: 6px; letter-spacing: 0.02em; font-weight: 600; }
+.stat-v { font-family: 'Instrument Serif', serif; font-size: 32px; font-weight: 400; color: var(--ink); line-height: 1; }
+.stat-s { font-size: 12px; color: var(--mist); margin-top: 4px; }
 .stat-bar { height: 2px; background: var(--border); border-radius: 1px; margin-top: 8px; }
 .stat-fill { height: 100%; border-radius: 1px; background: var(--honey); transition: width 1s ease; }
 
 /* ── SECTION ── */
 .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.sec-title { font-family: 'Instrument Serif', serif; font-size: 17px; font-weight: 400; color: var(--ink); }
-.sec-link { font-size: 11px; color: var(--honey-d); background: none; border: none; font-family: 'Nunito', sans-serif; cursor: pointer; font-weight: 500; }
+.sec-title { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; color: var(--ink); }
+.sec-link { font-size: 13px; color: var(--honey-d); background: none; border: none; font-family: 'Nunito', sans-serif; cursor: pointer; font-weight: 600; }
 .sec-link:hover { color: var(--honey); }
 
 /* ── CARD ── */
@@ -193,17 +193,17 @@ body {
 .chk.on { background: var(--honey); border-color: var(--honey); }
 .chk.on::after { content: '✓'; color: var(--onyx); font-size: 9px; font-weight: 700; }
 .task-b { flex: 1; }
-.task-txt { font-size: 13px; color: var(--ink); }
-.task-meta { display: flex; gap: 6px; margin-top: 4px; flex-wrap: wrap; align-items: center; }
+.task-txt { font-size: 15px; color: var(--ink); font-weight: 500; }
+.task-meta { display: flex; gap: 6px; margin-top: 5px; flex-wrap: wrap; align-items: center; }
 .tag {
-  font-size: 9px; font-weight: 600; letter-spacing: 0.05em;
-  padding: 2px 7px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.03em;
+  padding: 3px 10px; border-radius: 20px;
 }
 .t-micro { background: var(--honey-l); color: var(--honey-d); }
 .t-content { background: var(--rose-l); color: var(--rose); }
 .t-wellness { background: var(--green-l); color: var(--green); }
 .t-work { background: #EEF0F5; color: #5060A0; }
-.task-time { font-size: 10px; color: var(--mist); margin-left: auto; white-space: nowrap; }
+.task-time { font-size: 13px; color: var(--mist); margin-left: auto; white-space: nowrap; font-weight: 500; }
 
 /* ── AI INPUT ── */
 .ai-bar { display: flex; gap: 8px; margin-bottom: 10px; }
@@ -232,18 +232,22 @@ body {
 @keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
 
 /* ── CALENDAR ── */
-.cal-week { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; margin-bottom: 14px; }
+.cal-week { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 14px; overflow-x: auto; }
 .cal-d {
-  text-align: center; padding: 7px 3px; border-radius: 8px;
-  cursor: pointer; transition: background .1s;
+  text-align: center; padding: 9px 4px; border-radius: 10px;
+  cursor: pointer; transition: all .15s; min-width: 36px;
+  border: 1.5px solid transparent;
 }
 .cal-d:hover { background: var(--honey-l); }
 .cal-d.today { background: var(--honey); }
 .cal-d.today .cd-n, .cal-d.today .cd-wd { color: var(--onyx); }
-.cal-d.has-ev::after { content: '·'; display: block; color: var(--honey); font-size: 16px; line-height: 2px; margin-top: 3px; }
+.cal-d.selected { border-color: var(--honey-d); background: var(--honey-l); }
+.cal-d.today.selected { background: var(--honey); border-color: var(--onyx); }
+.cal-d.has-ev::after { content: '•'; display: block; color: var(--honey); font-size: 12px; line-height: 1; margin-top: 2px; }
 .cal-d.today.has-ev::after { color: var(--onyx); }
-.cd-wd { font-size: 9px; font-weight: 600; color: var(--mist); margin-bottom: 3px; letter-spacing: 0.05em; }
-.cd-n { font-size: 13px; color: var(--ink); }
+.cal-d.selected.has-ev::after { color: var(--honey-d); }
+.cd-wd { font-size: 9px; font-weight: 700; color: var(--mist); margin-bottom: 3px; letter-spacing: 0.06em; }
+.cd-n { font-size: 14px; font-weight: 600; color: var(--ink); }
 
 /* ── EVENTS ── */
 .ev {
@@ -252,12 +256,12 @@ body {
 }
 .ev:last-child { border-bottom: none; }
 .ev-time { text-align: right; min-width: 40px; }
-.ev-t { font-size: 11px; font-weight: 600; color: var(--ink); }
-.ev-dur { font-size: 9px; color: var(--mist); }
-.ev-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-.ev-name { font-size: 12px; color: var(--ink); }
-.ev-loc { font-size: 10px; color: var(--mist); margin-top: 1px; }
-.ev-src { font-size: 9px; margin-top: 2px; font-weight: 600; }
+.ev-t { font-size: 13px; font-weight: 700; color: var(--ink); }
+.ev-dur { font-size: 11px; color: var(--mist); }
+.ev-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.ev-name { font-size: 14px; color: var(--ink); font-weight: 600; }
+.ev-loc { font-size: 12px; color: var(--mist); margin-top: 2px; }
+.ev-src { font-size: 11px; margin-top: 2px; font-weight: 600; }
 .ev-icloud { color: #1B74E4; }
 .ev-local { color: var(--mist); }
 
@@ -271,10 +275,10 @@ body {
 .notif.unread { background: var(--honey-xl); }
 .notif-ico { width: 30px; height: 30px; border-radius: 50%; background: var(--paper); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
 .notif-b { flex: 1; }
-.notif-h { font-size: 12px; font-weight: 500; color: var(--ink); }
-.notif-p { font-size: 11px; color: var(--mist); margin-top: 1px; line-height: 1.4; }
+.notif-h { font-size: 14px; font-weight: 600; color: var(--ink); }
+.notif-p { font-size: 13px; color: var(--mist); margin-top: 2px; line-height: 1.5; }
 .notif-r { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.notif-when { font-size: 10px; color: var(--mist); white-space: nowrap; }
+.notif-when { font-size: 12px; color: var(--mist); white-space: nowrap; }
 .notif-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--honey); }
 
 /* ── SETUP MODAL ── */
@@ -451,7 +455,7 @@ body {
           <div class="nudge-label">Lazy B · Daily nudge</div>
           <div class="nudge-msg" id="nudge-txt">Loading your nudge…</div>
         </div>
-        <button class="nudge-spin" onclick="loadNudge('daily')">↺</button>
+        <button class="nudge-spin" id="spin-daily" onclick="loadNudge('daily')">↺</button>
       </div>
       <div class="stats">
         <div class="stat">
@@ -522,7 +526,7 @@ body {
           <div class="nudge-label">Microblading coach</div>
           <div class="nudge-msg" id="micro-msg">Loading…</div>
         </div>
-        <button class="nudge-spin" onclick="loadNudge('micro')">↺</button>
+        <button class="nudge-spin" id="spin-micro" onclick="loadNudge('micro')">↺</button>
       </div>
       <div class="stats" style="margin-top:16px">
         <div class="stat"><div class="stat-l">Sessions this month</div><div class="stat-v">14</div><div class="stat-bar"><div class="stat-fill" style="width:47%;background:#F06292"></div></div></div>
@@ -550,7 +554,7 @@ body {
           <div class="nudge-label">Content coach</div>
           <div class="nudge-msg" id="insta-msg">Loading…</div>
         </div>
-        <button class="nudge-spin" onclick="loadNudge('content')">↺</button>
+        <button class="nudge-spin" id="spin-content" onclick="loadNudge('content')">↺</button>
       </div>
       <div class="stats" style="margin-top:16px">
         <div class="stat"><div class="stat-l">Posts this week</div><div class="stat-v">2 <span style="font-size:13px;color:var(--mist)">/3</span></div><div class="stat-bar"><div class="stat-fill" style="width:66%;background:#E1306C"></div></div></div>
@@ -573,7 +577,7 @@ body {
           <div class="nudge-label">Wellness coach</div>
           <div class="nudge-msg" id="well-msg">Loading…</div>
         </div>
-        <button class="nudge-spin" onclick="loadNudge('wellness')">↺</button>
+        <button class="nudge-spin" id="spin-wellness" onclick="loadNudge('wellness')">↺</button>
       </div>
       <div class="sec-head" style="margin-top:16px"><div class="sec-title">Today's habits</div></div>
       <div class="card" id="well-tasks"></div>
@@ -648,6 +652,7 @@ const API = window.location.hostname === 'localhost'
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let calWeekOffset = 0;
+let selectedDayOffset = null;
 let icloudEvents = [];
 let credsSaved = false;
 
@@ -844,9 +849,10 @@ function renderCalWeek() {
   for(let i=0;i<7;i++){
     const d=new Date(mon); d.setDate(mon.getDate()+i);
     const isT = d.toDateString()===now.toDateString();
+    const isSel = selectedDayOffset === i;
     const hasE = localEvents.some(e=>e.day===i&&calWeekOffset===0) ||
       icloudEvents.some(e=>new Date(e.start).toDateString()===d.toDateString());
-    html+=`<div class="cal-d${isT?' today':''}${hasE?' has-ev':''}">
+    html+=`<div class="cal-d${isT?' today':''}${hasE?' has-ev':''}${isSel?' selected':''}" onclick="selectDay(${i})">
       <div class="cd-wd">${shortDays[d.getDay()]}</div>
       <div class="cd-n">${d.getDate()}</div>
     </div>`;
@@ -855,21 +861,42 @@ function renderCalWeek() {
   renderCalEvents(mon);
 }
 
+function selectDay(i) {
+  selectedDayOffset = (selectedDayOffset === i) ? null : i;
+  const base = new Date(now);
+  base.setDate(base.getDate() + calWeekOffset*7);
+  const mon = new Date(base);
+  mon.setDate(base.getDate()-((base.getDay()+6)%7));
+  document.querySelectorAll('.cal-d').forEach((el,idx) => el.classList.toggle('selected', idx===selectedDayOffset));
+  const lbl = document.getElementById('sec-events-lbl');
+  if(lbl) lbl.textContent = selectedDayOffset !== null ? shortDays[new Date(mon.getTime()+selectedDayOffset*86400000).getDay()] + ' events' : 'Events';
+  renderCalEvents(mon);
+}
+
 function renderCalEvents(mon) {
   const el = document.getElementById('cal-events');
-  const local = calWeekOffset===0 ? localEvents : [];
-  const cloud = icloudEvents.filter(e=>{
+  let local = calWeekOffset===0 ? localEvents : [];
+  let cloud = icloudEvents.filter(e=>{
     const d=new Date(e.start);
     const dayDiff = Math.floor((d-mon)/(1000*60*60*24));
     return dayDiff>=0&&dayDiff<7;
   }).map(e=>({
     time:new Date(e.start).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),
-    dur:'', name:e.title, loc:e.location||'', color:'#1B74E4', icloud:true, day:0
+    dur:'', name:e.title, loc:e.location||'', color:'#1B74E4', icloud:true, day:Math.floor((new Date(e.start)-mon)/86400000)
   }));
+
+  if(selectedDayOffset !== null) {
+    local = local.filter(e=>e.day===selectedDayOffset);
+    cloud = cloud.filter(e=>e.day===selectedDayOffset);
+  }
+
   const all = [...local.map(e=>({...e,icloud:false})),...cloud]
     .sort((a,b)=>a.time.localeCompare(b.time));
+  const label = selectedDayOffset !== null
+    ? `No events on ${shortDays[new Date(mon.getTime()+selectedDayOffset*86400000).getDay()]}`
+    : 'No events this week';
   el.innerHTML = all.length
-    ? all.map(e=>`<div class="ev" style="padding:11px 16px">
+    ? all.map(e=>`<div class="ev" style="padding:13px 18px">
         <div class="ev-time"><div class="ev-t">${e.time}</div><div class="ev-dur">${e.dur}</div></div>
         <div class="ev-dot" style="background:${e.color}"></div>
         <div>
@@ -878,10 +905,10 @@ function renderCalEvents(mon) {
           <div class="ev-src ${e.icloud?'ev-icloud':'ev-local'}">${e.icloud?'iCloud Calendar':'Local'}</div>
         </div>
       </div>`).join('')
-    : '<div style="padding:16px;font-size:12px;color:var(--mist)">No events this week</div>';
+    : `<div style="padding:20px;font-size:14px;color:var(--mist);text-align:center">${label}</div>`;
 }
 
-function shiftWeek(d){ calWeekOffset+=d; renderCalWeek(); }
+function shiftWeek(d){ selectedDayOffset=null; calWeekOffset+=d; renderCalWeek(); }
 
 // ─── ICLOUD SYNC ─────────────────────────────────────────────────────────────
 async function syncNow() {
@@ -985,24 +1012,35 @@ function showMsg(text,type) {
 // ─── AI NUDGES ───────────────────────────────────────────────────────────────
 async function loadNudge(type) {
   const ids = { daily:'nudge-txt', micro:'micro-msg', content:'insta-msg', wellness:'well-msg' };
+  const btnIds = { daily:'spin-daily', micro:'spin-micro', content:'spin-content', wellness:'spin-wellness' };
   const el = document.getElementById(ids[type]);
+  const btn = document.getElementById(btnIds[type]);
   if(!el) return;
 
-  // Rotate local nudge immediately
+  // Always rotate local nudge immediately — guaranteed to work offline
   const arr = localNudges[type];
   nudgeIdx[type] = (nudgeIdx[type]+1) % arr.length;
   el.innerHTML = arr[nudgeIdx[type]];
 
-  // Try server for AI nudge
+  // Show loading state on button
+  if(btn) { btn.textContent='…'; btn.disabled=true; }
+
+  // Try server for AI nudge (with timeout)
   try {
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 6000);
     const res = await fetch(`${API}/api/ai/nudge`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({type, context:'Give me a nudge for today.'})
+      body:JSON.stringify({type, context:'Give me a nudge for today.'}),
+      signal: controller.signal
     });
+    clearTimeout(timer);
     const data = await res.json();
-    if(data.success && data.nudge) el.textContent = data.nudge;
-  } catch(_) {} // silently keep local nudge
+    if(data.success && data.nudge) el.innerHTML = data.nudge;
+  } catch(_) {} // keep local nudge on any failure
+
+  if(btn) { btn.textContent='↺'; btn.disabled=false; }
 }
 
 // ─── AI TASK ─────────────────────────────────────────────────────────────────

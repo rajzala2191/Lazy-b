@@ -174,9 +174,14 @@ function calDAVRequest(url, username, password, body) {
 // ─── PARSE ICAL DATA FROM CALDAV XML RESPONSE ────────────────────────────────
 function parseICalResponse(xmlResponse) {
   const events = [];
-  const calDataMatches = xmlResponse.matchAll(/<[^:]*:calendar-data[^>]*>([\s\S]*?)<\/[^:]*:calendar-data>/g);
+  // Match calendar-data with or without namespace prefix, handle CDATA wrapping
+  const calDataMatches = xmlResponse.matchAll(/<[^>]*calendar-data[^>]*>([\s\S]*?)<\/[^>]*calendar-data>/g);
   for (const match of calDataMatches) {
-    const event = parseVEvent(match[1].trim());
+    // Strip CDATA wrapper if present
+    let ical = match[1].trim();
+    ical = ical.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '').trim();
+    if (!ical.includes('BEGIN:VCALENDAR')) continue;
+    const event = parseVEvent(ical);
     if (event) events.push(event);
   }
   events.sort((a, b) => new Date(a.start) - new Date(b.start));
